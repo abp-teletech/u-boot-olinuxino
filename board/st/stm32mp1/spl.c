@@ -40,14 +40,16 @@ int board_early_init_f(void)
 		stpmic1_init(opp_voltage_mv);
 	else
 	{
-		printf("Init AXP209 PMIC \n");
+		printf("Init AXP209 PMIC\n");
 
-		int ret;
+		int ret = axp_init();
 
-		ret = axp_init();
-		ret = axp_set_aldo3(1200);
-		ret = axp_set_aldo2(3300);
-		printf("---------%d------------\n",ret);
+                if (ret == 0) {
+                        ret = axp_set_aldo3(1200);
+                        ret = axp_set_aldo2(3300);
+                }
+
+                printf("---------(%d)------------\n",ret);
 	}
 
 	return 0;
